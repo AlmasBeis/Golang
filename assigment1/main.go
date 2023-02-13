@@ -26,7 +26,12 @@ func main() {
 			fmt.Scanln(&name)
 			fmt.Print("Type a new password: ")
 			fmt.Scanln(&password)
-			itemSystem.RegisterUser(name, password)
+			if itemSystem.Authenticate(name, password) || itemSystem.Reg(name) {
+				fmt.Println("You're already registered")
+			} else {
+				itemSystem.RegisterUser(name, password)
+			}
+
 		} else if operation == 2 {
 			fmt.Println("Type existing user to authorize")
 			fmt.Print("Type a username: ")

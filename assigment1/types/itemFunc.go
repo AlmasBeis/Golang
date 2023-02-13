@@ -13,6 +13,14 @@ func (is *ItemSystem) Authenticate(username, password string) bool {
 	}
 	return false
 }
+func (is *ItemSystem) Reg(username string) bool {
+	for _, i := range is.Users {
+		if i.RegistrationCheck(username) {
+			return true
+		}
+	}
+	return false
+}
 
 func (is *ItemSystem) SearchItems(name string) []*Item {
 	var results []*Item

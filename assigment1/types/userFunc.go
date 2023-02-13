@@ -6,3 +6,9 @@ func (u *User) Login(username, password string) bool {
 	}
 	return false
 }
+func (u *User) RegistrationCheck(username string) bool {
+	if username == u.Username {
+		return true
+	}
+	return false
+}
