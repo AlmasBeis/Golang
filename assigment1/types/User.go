@@ -5,6 +5,13 @@ type User struct {
 	Password string
 }
 
+func NewUser(username string, password string) *User {
+	return &User{
+		Username: username,
+		Password: password,
+	}
+}
+
 type Item struct {
 	itmID  int
 	Name   string

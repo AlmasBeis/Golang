@@ -5,23 +5,6 @@ import (
 	"os"
 )
 
-func (is *ItemSystem) Authenticate(username, password string) bool {
-	for _, i := range is.Users {
-		if i.Login(username, password) {
-			return true
-		}
-	}
-	return false
-}
-func (is *ItemSystem) Reg(username string) bool {
-	for _, i := range is.Users {
-		if i.RegistrationCheck(username) {
-			return true
-		}
-	}
-	return false
-}
-
 func (is *ItemSystem) SearchItems(name string) []*Item {
 	var results []*Item
 	for _, item := range is.Items {
@@ -65,21 +48,7 @@ func (is *ItemSystem) GiveRating(itemName string, rating float64) bool {
 	}
 	return true
 }
-func (is *ItemSystem) UserSaveToFile() error {
-	file, err := os.Create("users.txt")
-	if err != nil {
-		return err
-	}
-	defer file.Close()
 
-	encoder := json.NewEncoder(file)
-	err = encoder.Encode(is.Users)
-	if err != nil {
-		return err
-	}
-
-	return nil
-}
 func (is *ItemSystem) ItemSaveToFile() error {
 	var file, err = os.Create("items.txt")
 	if err != nil {
@@ -120,14 +89,4 @@ func (is *ItemSystem) ReadFromFile() error {
 	}
 
 	return nil
-}
-func (is *ItemSystem) RegisterUser(username string, password string) {
-	user := NewUser(username, password)
-	is.Users[username] = user
-}
-func NewUser(username string, password string) *User {
-	return &User{
-		Username: username,
-		Password: password,
-	}
 }
