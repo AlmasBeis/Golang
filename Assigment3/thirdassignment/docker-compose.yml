@@ -1,25 +1,21 @@
 version: '3.8'
 
 services:
-  web:
-    build: .
-    env_file:
-      - .env
+  book-shop:
+    build: ./
+    command: ./wait-for-postgres.sh db ./main
     ports:
-      - "8080:8080"
-    volumes:
-      - .:/usr/src/app
-    command: air ./cmd/main.go -b 0.0.0.0
-  db:
-    image: postgres:alpine
+      - 8080:8080
+    depends_on:
+      - db
     environment:
-      - POSTGRES_USER=${DB_USER}
-      - POSTGRES_PASSWORD=${DB_PASSWORD}
-      - POSTGRES_DB=${DB_NAME}
-    ports:
-      - "3000:3000"
+      - DB_PASSWORD=postgres
+  db:
+    restart: always
+    image: postgres:14.5
     volumes:
-      - postgres-db:/var/lib/postgresql/data
-
-volumes:
-  postgres-db:
+      - ./.database/postgres/data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_PASSWORD=postgres
+    ports:
+      - 5432:5432

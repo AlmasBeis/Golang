@@ -1,19 +1,19 @@
-# syntax=docker/dockerfile:1
-
-FROM golang:1.19
+FROM golang:1.20.2
 
 WORKDIR /app
 
-COPY go.mod ./
-COPY go.sum ./
+
+
+COPY ./ ./
+
+#install psql
+RUN apt-get update
+RUN apt-get -y install postgresql-client
+
+#wait for postgres
+RUN chmod +x wait-for-postgres.sh
+
 RUN go mod download
-
-RUN go install github.com/cosmtrek/air@latest
-
-COPY . .
-
 RUN go build -o main .
-
-EXPOSE 8080
 
 CMD ["./main"]

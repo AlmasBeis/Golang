@@ -5,7 +5,6 @@ import (
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 	"net/http"
-	"os"
 	"thirdassignment/controller"
 	"thirdassignment/model"
 	"thirdassignment/repository"
@@ -13,13 +12,13 @@ import (
 )
 
 func main() {
-	dsn := fmt.Sprintf(
-		"host=db user=%s password=%s dbname=%s port=5432 sslmode=disable TimeZone=Asia/Shanghai",
-		os.Getenv("DB_USER"),
-		os.Getenv("DB_PASSWORD"),
-		os.Getenv("DB_NAME"),
-	)
-	//dsn := "host=localhost user=postgres password=postgres dbname=postgres port=5432 sslmode=disable"
+	//dsn := fmt.Sprintf(
+	//	"host=db user=%s password=%s dbname=%s port=5432 sslmode=disable TimeZone=Asia/Shanghai",
+	//	os.Getenv("DB_USER"),
+	//	os.Getenv("DB_PASSWORD"),
+	//	os.Getenv("DB_NAME"),
+	//)
+	dsn := "host=db user=postgres password=postgres dbname=postgres port=5432 sslmode=disable"
 	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
 
 	if err != nil {
