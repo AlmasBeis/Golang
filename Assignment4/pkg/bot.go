@@ -3,7 +3,6 @@ package pkg
 import (
 	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api"
 	"log"
-	"strings"
 )
 
 const unsplashAccessKey = "Ss9ZFGE9dK0Dng12cLKVU9CdKvUXFpd08qdZzFNziyQ"
@@ -42,14 +41,9 @@ func (b *Bot) handleUpdates(updates tgbotapi.UpdatesChannel) {
 			b.handleCommand(update.Message)
 			continue
 		}
-		if update.Message.IsCommand() {
-			b.handleCommand(update.Message)
-			continue
-		}
-		if strings.ToLower(update.Message.Text) == "image" {
-			b.handleMessage(update.Message)
-			continue
-		}
+
+		b.handleMessage(update.Message)
+
 	}
 }
 
